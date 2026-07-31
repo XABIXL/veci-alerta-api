@@ -26,7 +26,21 @@ class UsuarioService:
         conn = get_db_connection()
         cursor = conn.cursor()
         query = "INSERT INTO usuarios (id_rol, nombre, apellido, telefono, correo, contrasena, calle_lote, foto_perfil) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-        valores = (datos.get('id_rol'), datos.get('nombre'), datos.get('apellido'), datos.get('telefono'), datos.get('correo'), datos.get('contrasena'), datos.get('calle_lote'), datos.get('foto_perfil'))
+        
+        # Resuelve el valor de la contraseña sin importar si viene como 'contrasena' o 'password'
+        contrasena_usuario = datos.get('contrasena') or datos.get('password')
+        
+        valores = (
+            datos.get('id_rol'), 
+            datos.get('nombre'), 
+            datos.get('apellido'), 
+            datos.get('telefono'), 
+            datos.get('correo'), 
+            contrasena_usuario, 
+            datos.get('calle_lote'), 
+            datos.get('foto_perfil')
+        )
+        
         cursor.execute(query, valores)
         conn.commit()
         nuevo_id = cursor.lastrowid
