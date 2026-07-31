@@ -1,4 +1,5 @@
 from config import get_db_connection
+
 class UsuarioService:
     @staticmethod
     def obtener_todos():
@@ -32,6 +33,10 @@ class UsuarioService:
         cursor.close()
         conn.close()
         return nuevo_id
+
+    @staticmethod
+    def crear_usuario(datos):
+        return UsuarioService.registrar(datos)
 
     @staticmethod
     def actualizar(id_usuario, datos):
